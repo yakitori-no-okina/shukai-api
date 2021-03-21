@@ -17,15 +17,15 @@ type Member struct {
 }
 
 type Recruitment struct {
-	ID              uint64
-	OwnerID         uint64
-	OwnerIcon       string
-	NumOfUsers      int
-	NumOfExistUsers int
-	Title           string
-	Message         string
-	StartDate       time.Time
-	EndDate         time.Time
+	ID         uint64
+	OwnerID    uint64
+	OwnerIcon  string
+	NumOfUsers int
+	Member     Member
+	Title      string
+	Message    string
+	StartDate  time.Time
+	EndDate    time.Time
 }
 
 type RecruitmentForAdding struct {
