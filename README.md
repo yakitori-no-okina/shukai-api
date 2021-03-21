@@ -2,4 +2,5 @@
 shukaiアプリのapiを提供する  
 API: https://app.swaggerhub.com/apis/KazuwoKiwame12/SyukaiAPI/1.0.0  
 DB: 
-<img width="940" alt="db" src="https://user-images.githubusercontent.com/39262724/111750767-fa616d80-88d6-11eb-9d42-d47f579ffd50.PNG">
+![ER図_v2](https://user-images.githubusercontent.com/39262724/111902284-210ed800-8a80-11eb-8a73-2a6e3596f937.png)
+
