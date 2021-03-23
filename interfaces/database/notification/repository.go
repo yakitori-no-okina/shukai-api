@@ -15,7 +15,7 @@ func (repo *NotificationRepository) Store(n domain.NotificationModel) (err error
 }
 
 func (repo *NotificationRepository) Getlist() (notifications *domain.Notifications, err error) {
-	var notifications domain.Notifications
-	result := repo.Find(&notifications)
-	return &notifications, result.Error
+	var ns domain.Notifications
+	result := repo.Find(&ns)
+	return &ns, result.Error
 }

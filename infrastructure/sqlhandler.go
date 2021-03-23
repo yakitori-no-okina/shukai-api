@@ -43,8 +43,8 @@ func (handler *SqlHandler) Save(value interface{}) *gorm.DB {
 	return handler.Conn.Save(value)
 }
 
-func (handler *SqlHandler) Delete(value interface{}) *gorm.DB {
-	return handler.Conn.Delete(value)
+func (handler *SqlHandler) Delete(value interface{}, args ...interface{}) *gorm.DB {
+	return handler.Conn.Delete(value, args...)
 }
 
 func (handler *SqlHandler) Where(query interface{}, args ...interface{}) *gorm.DB {

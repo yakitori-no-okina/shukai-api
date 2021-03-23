@@ -11,11 +11,11 @@ type RecruitmentUsersRepository struct {
 
 func (repo *RecruitmentUsersRepository) Store(ru domain.RecruitmentUsersModel) (id int, err error) {
 	result := repo.Create(&ru)
-	return &ru.ID, result.Error
+	return int(ru.ID), result.Error
 }
 
 func (repo *RecruitmentUsersRepository) Get(recruitment_id int) (users *[]domain.RecruitmentUsersModel, err error) {
-	var users []domain.RecruitmentUsersModel
-	result := repo.Find(&users, recruitment_id)
-	return &users, result.Error
+	var us []domain.RecruitmentUsersModel
+	result := repo.Find(&us, recruitment_id)
+	return &us, result.Error
 }

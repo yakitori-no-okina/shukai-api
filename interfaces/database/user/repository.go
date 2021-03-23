@@ -9,19 +9,19 @@ type UserRepository struct {
 	database.SqlHandler
 }
 
-func (repo *UserRepository) Store(ua domain.UserForAdding) (id int, err error) {
-	result := repo.Create(&ua)
-	return &u.ID, result.Error
+func (repo *UserRepository) Store(u domain.UserModel) (id int, err error) {
+	result := repo.Create(&u)
+	return int(u.ID), result.Error
 }
 
 func (repo *UserRepository) Update(id int, ue domain.UserForEditting) (err error) {
-	user := domain.UserModel{ID: id}
-	result := repo.Model(&user).Update(&ue)
+	user := domain.UserModel{ID: uint64(id)}
+	result := repo.Model(&user).Updates(&ue)
 	return result.Error
 }
 
 func (repo *UserRepository) Get(id int) (user *domain.UserModel, err error) {
-	var user domain.UserModel
-	result := repo.First(&user, id)
-	return &user, result.Error
+	var u domain.UserModel
+	result := repo.First(&u, id)
+	return &u, result.Error
 }
