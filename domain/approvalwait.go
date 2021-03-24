@@ -1,9 +1,9 @@
 package domain
 
 type ApprovalWaitModel struct {
-	ID               uint64 `gorm:"primaryKey"`
-	UserID           uint64
+	ID               int `gorm:"primaryKey"`
+	UserID           int
 	UserModel        UserModel `gorm:"foreignKey:UserID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	RecruitmentID    uint64
+	RecruitmentID    int
 	RecruitmentModel RecruitmentModel `gorm:"foreignKey:RecruitmentID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }

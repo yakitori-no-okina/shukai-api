@@ -34,7 +34,7 @@ type UserProfile struct {
 }
 
 type UserModel struct {
-	ID       uint64 `gorm:"primaryKey"`
+	ID       int    `gorm:"primaryKey"`
 	Mail     string `gorm: "not null"`
 	Password string `gorm: "not null"`
 	Name     string `gorm: "not null"`
@@ -55,8 +55,8 @@ type UserSkill struct {
 }
 
 type UserSkillModel struct {
-	ID        uint64 `gorm:"primaryKey"`
-	UserID    uint64
+	ID        int `gorm:"primaryKey"`
+	UserID    int
 	UserModel UserModel `gorm:"foreignkey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	UserSkill
 }

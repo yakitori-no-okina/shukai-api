@@ -11,14 +11,14 @@ type Conditions struct {
 }
 
 type Member struct {
-	ID   uint64
+	ID   int
 	Name string
 	Icon string
 }
 
 type Recruitment struct {
-	ID         uint64
-	OwnerID    uint64
+	ID         int
+	OwnerID    int
 	OwnerIcon  string
 	NumOfUsers int
 	Member     Member
@@ -29,7 +29,7 @@ type Recruitment struct {
 }
 
 type RecruitmentForAdding struct {
-	OwnerID    uint64
+	OwnerID    int
 	EventName  string
 	EventURL   string
 	NumOfUsers int
@@ -42,7 +42,7 @@ type RecruitmentForAdding struct {
 }
 
 type RecruitmentDetail struct {
-	OwnerID    uint64
+	OwnerID    int
 	OwnerIcon  string
 	EventName  string
 	EventURL   string
@@ -57,8 +57,8 @@ type RecruitmentDetail struct {
 }
 
 type RecruitmentModel struct {
-	ID         uint64 `gorm:"primaryKey"`
-	OwnerID    uint64
+	ID         int `gorm:"primaryKey"`
+	OwnerID    int
 	UserModel  UserModel `gorm:"foreignKey:OwnerID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	EventName  string    `gorm: "not null"`
 	EventURL   string    `gorm: "not null"`
@@ -72,16 +72,16 @@ type RecruitmentModel struct {
 }
 
 type RecruitmentConditionsModel struct {
-	ID               uint64 `gorm:"primaryKey"`
-	RecruitmentID    uint64
+	ID               int `gorm:"primaryKey"`
+	RecruitmentID    int
 	RecruitmentModel RecruitmentModel `gorm:"foreignKey:RecruitmentID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	Conditions
 }
 
 type RecruitmentUsersModel struct {
-	ID               uint64 `gorm:"primaryKey"`
-	UserID           uint64
+	ID               int `gorm:"primaryKey"`
+	UserID           int
 	UserModel        UserModel `gorm:"foreignKey:UserID; constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	RecruitmentID    uint64
+	RecruitmentID    int
 	RecruitmentModel RecruitmentModel `gorm:"foreignKey:RecruitmentID; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
