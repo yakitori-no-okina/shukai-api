@@ -5,16 +5,16 @@ import (
 	"shukai-api/interfaces/database"
 )
 
-type NotificationRepository struct {
+type Repository struct {
 	database.SqlHandler
 }
 
-func (repo *NotificationRepository) Store(n domain.NotificationModel) (err error) {
+func (repo *Repository) Store(n domain.NotificationModel) (err error) {
 	result := repo.Create(&n)
 	return result.Error
 }
 
-func (repo *NotificationRepository) Getlist() (notifications *domain.Notifications, err error) {
+func (repo *Repository) Getlist() (notifications *domain.Notifications, err error) {
 	var ns domain.Notifications
 	result := repo.Find(&ns)
 	return &ns, result.Error

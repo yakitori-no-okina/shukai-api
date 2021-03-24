@@ -5,21 +5,21 @@ import (
 	"shukai-api/interfaces/database"
 )
 
-type RecruitmentRepository struct {
+type Repository struct {
 	database.SqlHandler
 }
 
-func (repo *RecruitmentRepository) Store(r domain.RecruitmentModel) (id uint64, err error) {
+func (repo *Repository) Store(r domain.RecruitmentModel) (id int, err error) {
 	result := repo.Create(&r)
 	return r.ID, result.Error
 }
 
-func (repo *RecruitmentRepository) Remove(id int) (err error) {
+func (repo *Repository) Remove(id int) (err error) {
 	result := repo.Delete(&domain.RecruitmentModel{}, id)
 	return result.Error
 }
 
-func (repo *RecruitmentRepository) Get(id int) (recruitment *domain.RecruitmentModel, err error) {
+func (repo *Repository) Get(id int) (recruitment *domain.RecruitmentModel, err error) {
 	var r domain.RecruitmentModel
 	result := repo.First(&r, id)
 	return &r, result.Error
