@@ -9,14 +9,21 @@ type Repository struct {
 	database.SqlHandler
 }
 
-func (repo *Repository) Store(u domain.UserModel) (id int, err error) {
-	result := repo.Create(&u)
+func (repo *Repository) Store(u *domain.UserModel) (id int, err error) {
+	result := repo.Create(u)
 	return u.ID, result.Error
 }
 
-func (repo *Repository) Update(id int, ue domain.UserForEditting) (err error) {
-	user := domain.UserModel{ID: id}
-	result := repo.Model(&user).Updates(&ue)
+func (repo *Repository) Update(id int, ue *domain.UserForEditting) (err error) {
+	user := &domain.UserModel{ID: id}
+	result := repo.Model(user).Updates(domain.UserModel{
+		Name:    ue.Name,
+		Icon:    ue.Icon,
+		Github:  ue.Github,
+		Twitter: ue.Twitter,
+		Links:   ue.Links,
+		About:   ue.About,
+	})
 	return result.Error
 }
 

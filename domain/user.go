@@ -1,57 +1,67 @@
 package domain
 
 type Skill struct {
-	Icon       string
-	Backend    int
-	Frontend   int
-	Management int
-	Mobile     int
+	Icon       string `json:"icon" form:"icon" query"icon"`
+	Backend    int    `json:"backend" form:"backend" query"backend"`
+	Frontend   int    `json:"frontend" form:"frontend" query"frontend"`
+	Management int    `json:"management" form:"management" query"management"`
+	Mobile     int    `json:"mobile" form:"mobile" query"mobile"`
 	AI         int
 }
 
 type UserForAdding struct {
-	Mail     string
-	Password string
-	Name     string
-	Icon     string
-	Github   string
-	Twitter  string
-	Links    []string
-	About    string
+	Mail     string   `json:"mail" form:"mail" query"mail"`
+	Password string   `json:"password" form:"password" query"password"`
+	Name     string   `json:"name" form:"name" query"name"`
+	Icon     string   `json:"icon" form:"icon" query"icon"`
+	Github   string   `json:"github" form:"github" query"github"`
+	Twitter  string   `json:"twitter" form:"twitter" query"twitter"`
+	Links    []string `json:"links" form:"links" query"links"`
+	About    string   `json:"about" form:"about" query"about"`
 }
 
 type UserForEditting struct {
-	Name    string
-	Icon    string
-	Github  string
-	Twitter string
-	Links   []string
+	Name    string `json:"name" form:"name" query"name"`
+	Icon    string `json:"icon" form:"icon" query"icon"`
+	Github  string `json:"github" form:"github" query"github"`
+	Twitter string `json:"twitter" form:"twitter" query"twitter"`
+	Links   string `json:"links" form:"links" query"links"`
+	About   string `json:"about" form:"about" query"about"`
+}
+
+type UserForGetting struct {
+	Name    string   `json:"name" form:"name" query"name"`
+	Icon    string   `json:"icon" form:"icon" query"icon"`
+	Github  string   `json:"github" form:"github" query"github"`
+	Twitter string   `json:"twitter" form:"twitter" query"twitter"`
+	Links   []string `json:"links" form:"links" query"links"`
+	About   string   `json:"about" form:"about" query"about"`
 }
 
 type UserProfile struct {
-	UserForEditting
-	Skills []Skill
+	UserForGetting
+	Skills []Skill `json:"skills" form:"skill_detail" query"skills"`
 }
 
 type UserModel struct {
-	ID       int    `gorm:"primaryKey"`
-	Mail     string `gorm: "not null"`
-	Password string `gorm: "not null"`
-	Name     string `gorm: "not null"`
-	Icon     string `gorm: "not null"`
-	Github   string
-	Twitter  string
-	Links    string
-	About    string
+	ID       int    `gorm:"primaryKey" json:"id" form:"id" query"id"`
+	Mail     string `gorm: "not null" json:"mail" form:"mail" query"mail"`
+	Password string `gorm: "not null" json:"password" form:"password" query"password"`
+	Name     string `gorm: "not null" json:"name" form:"name" query"name"`
+	Icon     string `gorm: "not null" json:"icon" form:"icon" query"icon"`
+	Github   string `json:"github" form:"github" query"github"`
+	Twitter  string `json:"twitter" form:"twitter" query"twitter"`
+	Links    string `json:"links" form:"links" query"links"`
+	About    string `json:"about" form:"about" query"about"`
 }
 
 type UserSkill struct {
-	Backend    int
-	Frontend   int
-	Management int
-	Mobile     int
+	Backend    int `json:"backend" form:"backend" query"backend"`
+	Frontend   int `json:"frontend" form:"frontend" query"frontend"`
+	Management int `json:"management" form:"management" query"management"`
+	Mobile     int `json:"mobile" form:"mobile" query"mobile"`
 	AI         int
-	Skills     string
+	Skills     string `json:"skills" form:"skills" query"skills"`
 }
 
 type UserSkillModel struct {

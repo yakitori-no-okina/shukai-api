@@ -31,13 +31,13 @@ type RecruitmentUsersRepository interface {
 }
 
 type UserRepository interface {
-	Store(u domain.UserModel) (id int, err error)
-	Update(id int, ue domain.UserForEditting) (err error)
+	Store(u *domain.UserModel) (id int, err error)
+	Update(id int, ue *domain.UserForEditting) (err error)
 	Get(id int) (user *domain.UserModel, err error)
 }
 
 type UserSkillRepository interface {
-	Store(us domain.UserSkillModel) (id int, err error)
-	Update(id int, us domain.UserSkill) (err error)
-	Get(id int) (user *domain.UserSkillModel, err error)
+	Store(us *domain.UserSkillModel) (id int, err error)
+	Update(user_id int, us *domain.UserSkill) (err error)
+	GetWithUserID(user_id int) (user *domain.UserSkillModel, err error)
 }
