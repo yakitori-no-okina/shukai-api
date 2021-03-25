@@ -9,8 +9,8 @@ type Repository struct {
 	database.SqlHandler
 }
 
-func (repo *Repository) Store(n domain.NotificationModel) (err error) {
-	result := repo.Create(&n)
+func (repo *Repository) Store(n *domain.NotificationModel) (err error) {
+	result := repo.Create(n)
 	return result.Error
 }
 

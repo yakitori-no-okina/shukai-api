@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"log"
+	"errors"
 	"shukai-api/domain"
 	"time"
 )
@@ -9,24 +9,26 @@ import (
 type ApprovalInteractor struct {
 	Aw ApprovalWaitRepository
 	Ru RecruitmentUsersRepository
+	R  RecruitmentRepository
 	N  NotificationRepository
 }
 
-func (interactor *ApprovalInteractor) Decide(id int, should_approval bool) (success bool, err error) {
+func (interactor *ApprovalInteractor) Decide(id int, should_approval bool) (err error) {
 	recruitment_id, user_id, error_for_get := interactor.Aw.Get(id)
 	if error_for_get != nil {
-		return false, error_for_get
+		return error_for_get
 	}
 
+	// TODO approvalwaitとrecruitmentusersを統合し、カラムの更新で済ませられるようにする
 	error_for_remove := interactor.Aw.Remove(id)
 	if error_for_remove != nil {
-		return false, error_for_remove
+		return error_for_remove
 	}
 
 	jst, _ := time.LoadLocation("Asia/Tokyo")
 	datetime := time.Now().In(jst)
 
-	n_model := domain.NotificationModel{
+	n_model := &domain.NotificationModel{
 		UserID:   user_id,
 		About:    "リクエストについて",
 		Message:  "",
@@ -35,10 +37,36 @@ func (interactor *ApprovalInteractor) Decide(id int, should_approval bool) (succ
 	}
 
 	if should_approval {
-		ru_model := domain.RecruitmentUsersModel{UserID: user_id, RecruitmentID: recruitment_id}
+		ru_model := &domain.RecruitmentUsersModel{UserID: user_id, RecruitmentID: recruitment_id}
 		_, error_for_ru_store := interactor.Ru.Store(ru_model)
 		if error_for_ru_store != nil {
-			log.Fatal(err)
+			return error_for_ru_store
+		}
+
+		r_model, error_for_get := interactor.R.Get(recruitment_id)
+		if error_for_get != nil {
+			return error_for_get
+		}
+		ru_models, error_for_get_list := interactor.Ru.GetList(recruitment_id)
+		if error_for_get_list != nil {
+			return error_for_get_list
+		}
+
+		if r_model.NumOfUsers <= len(ru_models) {
+			n_model.Message = "リクエストしていた募集の人数が上限に達しました。他の募集に申し込んでください。"
+			//TODO teamテーブルを作り、募集削除で関連の募集待ちデータ消せるようにする
+			if error_for_remove_list := interactor.Aw.RemoveWithRecruitmentID(recruitment_id); error_for_remove_list != nil {
+				return error_for_remove_list
+			}
+			// TODO 非同期処理で実現できるようにする
+			for _, model := range ru_models {
+				n_model.UserID = model.UserID
+				error_for_n_store := interactor.N.Store(n_model)
+				if error_for_n_store != nil {
+					return error_for_n_store
+				}
+			}
+			return errors.New("すでに募集人数に達しています。他の承認待ちも全て削除しました。")
 		}
 
 		n_model.Message = "あなたが申し込んでいた募集のオーナーがあなたのリクエストを承認しました"
@@ -48,8 +76,8 @@ func (interactor *ApprovalInteractor) Decide(id int, should_approval bool) (succ
 
 	error_for_n_store := interactor.N.Store(n_model)
 	if error_for_n_store != nil {
-		log.Fatal(err)
+		return error_for_n_store
 	}
 
-	return true, nil
+	return nil
 }
