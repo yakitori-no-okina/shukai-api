@@ -51,7 +51,7 @@ func (action *RecruitmentAddAction) Add(c Context) error {
 		return c.JSON(http.StatusBadRequest, rfa)
 	}
 
-	layout := "2006/01/02"
+	layout := "2006-01-02"
 	start_date, error_for_parse_s := time.Parse(layout, rfa.StartDate)
 	if error_for_parse_s != nil {
 		return c.JSON(http.StatusBadRequest, error_for_parse_s)
