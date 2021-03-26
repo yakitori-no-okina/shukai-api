@@ -26,12 +26,25 @@ func (repo *Repository) Get(id int) (recruitment *domain.RecruitmentModel, err e
 }
 
 func (repo *Repository) GetListWithSkill(skill *domain.UserSkill) (recruitments []domain.RecruitmentModel, err error) {
-	var rcs []domain.RecruitmentConditionsModel
-	result := repo.Where("backend >= ? AND frontend >= ? AND management >= ? AND mobile >= ? AND ai >= ?", skill.Backend, skill.Frontend, skill.Management, skill.Mobile, skill.AI).Find(&rcs)
+	var rc_models []domain.RecruitmentConditionsModel
+	result := repo.Where(
+		"backend <= ? AND frontend <= ? AND management <= ? AND mobile <= ? AND ai <= ?",
+		skill.Backend,
+		skill.Frontend,
+		skill.Management,
+		skill.Mobile,
+		skill.AI,
+	).Find(&rc_models)
+	if result.Error != nil {
+		return []domain.RecruitmentModel{}, result.Error
+	}
+
+	var r_ids []int
+	for _, rc_model := range rc_models {
+		r_ids = append(r_ids, rc_model.RecruitmentID)
+	}
 
 	var rs []domain.RecruitmentModel
-	for _, rc := range rcs {
-		rs = append(rs, rc.RecruitmentModel)
-	}
-	return rs, result.Error
+	result_for_get := repo.Where(r_ids).Find(&rs)
+	return rs, result_for_get.Error
 }

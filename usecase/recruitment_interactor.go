@@ -20,6 +20,7 @@ func (interactor *RecruitmentInteractor) GetList(user_id int) (recruitments []do
 	if error_for_get != nil {
 		return []domain.Recruitment{}, error_for_get
 	}
+
 	us := &domain.UserSkill{
 		Backend:    us_model.Backend,
 		Frontend:   us_model.Frontend,
