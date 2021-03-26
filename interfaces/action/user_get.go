@@ -3,6 +3,7 @@ package action
 import (
 	"net/http"
 	"shukai-api/interfaces/database"
+	"shukai-api/interfaces/database/recruitment"
 	"shukai-api/interfaces/database/user"
 	"shukai-api/usecase"
 	"strconv"
@@ -19,6 +20,12 @@ func NewUserGetAction(sqlHandler database.SqlHandler) *UserGetAction {
 				SqlHandler: sqlHandler,
 			},
 			US: &user.SkillRepository{
+				SqlHandler: sqlHandler,
+			},
+			R: &recruitment.Repository{
+				SqlHandler: sqlHandler,
+			},
+			RU: &recruitment.UsersRepository{
 				SqlHandler: sqlHandler,
 			},
 		},

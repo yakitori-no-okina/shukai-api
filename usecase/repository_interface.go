@@ -31,6 +31,7 @@ type RecruitmentRepository interface {
 
 type RecruitmentUsersRepository interface {
 	Store(ru *domain.RecruitmentUsersModel) (id int, err error)
+	GetTeamIDWithUserID(user_id int) (team_id int, err error)
 	GetList(recruitment_id int) (users []domain.RecruitmentUsersModel, err error)
 }
 

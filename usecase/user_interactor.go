@@ -8,6 +8,8 @@ import (
 type UserInteractor struct {
 	U  UserRepository
 	US UserSkillRepository
+	R  RecruitmentRepository
+	RU RecruitmentUsersRepository
 }
 
 func (interactor *UserInteractor) Add(u *domain.UserModel) (id int, err error) {
@@ -50,6 +52,14 @@ func (interactor *UserInteractor) Get(id int) (user_profile domain.UserProfile, 
 	json.Unmarshal([]byte(userskill.Skills), &skills)
 	userprofile.Skills = skills
 
+	team_id, error_for_get_id := interactor.RU.GetTeamIDWithUserID(user.ID)
+	if error_for_get_id != nil {
+		return userprofile, nil
+	}
+	r_model, _ := interactor.R.Get(team_id)
+
+	userprofile.TeamID = &team_id
+	userprofile.TeamIcon = r_model.Icon
 	return userprofile, nil
 }
 

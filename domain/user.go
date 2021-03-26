@@ -40,7 +40,9 @@ type UserForGetting struct {
 
 type UserProfile struct {
 	UserForGetting
-	Skills []Skill `json:"skills" form:"skill_detail" query"skills"`
+	Skills   []Skill `json:"skills" form:"skill_detail" query"skills"`
+	TeamID   *int    `json:"team_id"`
+	TeamIcon string  `json:"team_icon"`
 }
 
 type UserModel struct {

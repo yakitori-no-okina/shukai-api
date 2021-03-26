@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"shukai-api/domain"
 	"shukai-api/interfaces/database"
+	"shukai-api/interfaces/database/recruitment"
 	"shukai-api/interfaces/database/user"
 	"shukai-api/usecase"
 )
@@ -20,6 +21,12 @@ func NewUserAddAction(sqlHandler database.SqlHandler) *UserAddAction {
 				SqlHandler: sqlHandler,
 			},
 			US: &user.SkillRepository{
+				SqlHandler: sqlHandler,
+			},
+			R: &recruitment.Repository{
+				SqlHandler: sqlHandler,
+			},
+			RU: &recruitment.UsersRepository{
 				SqlHandler: sqlHandler,
 			},
 		},
