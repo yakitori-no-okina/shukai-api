@@ -56,6 +56,6 @@ func (action *UserAddAction) Add(c Context) error {
 		return c.JSON(http.StatusMethodNotAllowed, error_for_store)
 	}
 
-	return_value := map[string]int{"id": id, "token": "svasdn"}
+	return_value := map[string]interface{}{"id": id, "token": "svasdn"}
 	return c.JSON(http.StatusCreated, return_value)
 }
