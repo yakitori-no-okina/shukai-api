@@ -29,6 +29,6 @@ func (action *LoginAction) Login(c Context) error {
 		c.JSON(http.StatusMethodNotAllowed, err.Error)
 	}
 
-	return_value := map[string]int{"id": user_id}
+	return_value := map[string]int{"id": user_id, "token": "svasdn"}
 	return c.JSON(http.StatusOK, return_value)
 }
