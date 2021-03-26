@@ -27,18 +27,18 @@ type Recruitment struct {
 }
 
 type RecruitmentForAdding struct {
-	OwnerID    int    `json:"owner_id" form:"owner_id"`
-	EventName  string `json:"event_name" form:"event_name"`
-	EventURL   string `json:"event_url" form:"event_url"`
-	NumOfUsers int    `json:"num_of_users" form:"num_of_users"`
-	Conditions string `json:"conditions" form:"conditions"`
-	Title      string `json:"title" form:"title"`
-	Message    string `json:"message" form:"message"`
-	Icon       string `json:"icon" form:"icon"`
-	StartDate  string `json:"start_date" form:"start_date"`
-	EndDate    string `json:"end_date" form:"end_date"`
-	Purpose    int    `json:"purpose" form:"purpose"`
-	Address    string `json:"address" form:"address"`
+	OwnerID    int        `json:"owner_id" form:"owner_id"`
+	EventName  string     `json:"event_name" form:"event_name"`
+	EventURL   string     `json:"event_url" form:"event_url"`
+	NumOfUsers int        `json:"num_of_users" form:"num_of_users"`
+	Conditions Conditions `json:"conditions" form:"conditions"`
+	Title      string     `json:"title" form:"title"`
+	Message    string     `json:"message" form:"message"`
+	Icon       string     `json:"icon" form:"icon"`
+	StartDate  string     `json:"start_date" form:"start_date"`
+	EndDate    string     `json:"end_date" form:"end_date"`
+	Purpose    int        `json:"purpose" form:"purpose"`
+	Address    string     `json:"address" form:"address"`
 }
 
 type RecruitmentDetail struct {

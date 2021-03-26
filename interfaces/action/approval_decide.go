@@ -39,7 +39,7 @@ func (action *ApprovalDecideAction) Decide(c Context) error {
 
 	error_for_decide := action.Interactor.Decide(approvalwait_id, should_approval)
 	if error_for_decide != nil {
-		return c.JSON(http.StatusBadRequest, error_for_decide)
+		return c.JSON(http.StatusBadRequest, error_for_decide.Error)
 	} else {
 		return c.JSON(http.StatusNoContent, nil)
 	}

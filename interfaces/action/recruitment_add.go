@@ -1,7 +1,6 @@
 package action
 
 import (
-	"encoding/json"
 	"net/http"
 	"shukai-api/domain"
 	"shukai-api/interfaces/database"
@@ -60,8 +59,8 @@ func (action *RecruitmentAddAction) Add(c Context) error {
 	if error_for_parse_e != nil {
 		return c.JSON(http.StatusBadRequest, error_for_parse_e)
 	}
-	var conditions domain.Conditions
-	json.Unmarshal([]byte(rfa.Conditions), &conditions)
+	// var conditions domain.Conditions
+	// json.Unmarshal([]byte(rfa.Conditions), &conditions)
 	r_model := &domain.RecruitmentModel{
 		OwnerID:    rfa.OwnerID,
 		EventName:  rfa.EventName,
@@ -77,7 +76,7 @@ func (action *RecruitmentAddAction) Add(c Context) error {
 	}
 
 	rc_model := &domain.RecruitmentConditionsModel{
-		Conditions: conditions,
+		Conditions: rfa.Conditions,
 	}
 
 	error_for_store := action.Interactor.Add(r_model, rc_model)

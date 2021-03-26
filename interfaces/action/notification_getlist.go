@@ -26,7 +26,7 @@ func (action *NotificationGetListAction) GetList(c Context) error {
 	user_id, _ := strconv.Atoi(c.Param("user_id"))
 	n_models, error_for_get := action.Interactor.GetList(user_id)
 	if error_for_get != nil {
-		return c.JSON(http.StatusBadRequest, nil)
+		return c.JSON(http.StatusBadRequest, error_for_get.Error)
 	}
 	return c.JSON(http.StatusOK, n_models)
 }
