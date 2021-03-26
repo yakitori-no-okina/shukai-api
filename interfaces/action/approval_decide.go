@@ -23,6 +23,9 @@ func NewApprovalDecideAction(sqlHandler database.SqlHandler) *ApprovalDecideActi
 			Ru: &recruitment.UsersRepository{
 				SqlHandler: sqlHandler,
 			},
+			R: &recruitment.Repository{
+				SqlHandler: sqlHandler,
+			},
 			N: &notification.Repository{
 				SqlHandler: sqlHandler,
 			},
