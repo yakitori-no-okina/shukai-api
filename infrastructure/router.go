@@ -1,7 +1,10 @@
 package infrastructure
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	"shukai-api/interfaces/action"
 )
@@ -23,6 +26,11 @@ func NewRouting(sqlHandler *SqlHandler, port string) *Routing {
 }
 
 func (r *Routing) setRouting() {
+	r.Echo.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"https://syukai.netlify.app/"},
+		AllowMethods: []string{http.MethodGet, http.MethodPatch, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
+
 	decideAction := func(c echo.Context) error { return action.NewApprovalDecideAction(r.SqlHandler).Decide(c) }
 	notificationGetListAction := func(c echo.Context) error { return action.NewNotificationGetListAction(r.SqlHandler).GetList(c) }
 	notificationReadAction := func(c echo.Context) error { return action.NewNotificationReadAction(r.SqlHandler).Read(c) }
