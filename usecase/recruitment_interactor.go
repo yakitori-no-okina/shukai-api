@@ -111,14 +111,15 @@ func (interactor *RecruitmentInteractor) Request(recruitment_id int, user_id int
 		return error_for_get_list
 	}
 
-	if r_model.NumOfUsers >= len(ru_models) {
+	if r_model.NumOfUsers <= len(ru_models) {
 		return errors.New("既に募集人数の上限に達しています。よって、この募集にはリクエストできません")
 	}
 
-	aw_id, error_for_store := interactor.AW.Store(&domain.ApprovalWaitModel{
+	aw_model := &domain.ApprovalWaitModel{
 		RecruitmentID: recruitment_id,
 		UserID:        user_id,
-	})
+	}
+	aw_id, error_for_store := interactor.AW.Store(aw_model)
 	if error_for_store != nil {
 		return error_for_store
 	}

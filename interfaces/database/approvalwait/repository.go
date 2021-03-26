@@ -1,6 +1,7 @@
 package approvalwait
 
 import (
+	"log"
 	"shukai-api/domain"
 	"shukai-api/interfaces/database"
 )
@@ -10,6 +11,7 @@ type Repository struct {
 }
 
 func (repo *Repository) Store(a *domain.ApprovalWaitModel) (id int, err error) {
+	log.Print(a)
 	result := repo.Create(a)
 	return a.ID, result.Error
 }

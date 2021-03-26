@@ -30,6 +30,7 @@ func (r *Routing) setRouting() {
 	recruitmentAddAction := func(c echo.Context) error { return action.NewRecruitmentAddAction(r.SqlHandler).Add(c) }
 	recruitmentGetListAction := func(c echo.Context) error { return action.NewRecruitmentGetListAction(r.SqlHandler).GetList(c) }
 	recruitmentGetAction := func(c echo.Context) error { return action.NewRecruitmentGetAction(r.SqlHandler).Get(c) }
+	recruitmentRequestAction := func(c echo.Context) error { return action.NewRecruitmentRequestAction(r.SqlHandler).Request(c) }
 	r.Echo.DELETE("/approval/:approvalwait_id/:should_approval", decideAction)
 	r.Echo.POST("/user/add", userAddAction)
 	r.Echo.PUT("/user/:user_id", userEditAction)
@@ -38,7 +39,7 @@ func (r *Routing) setRouting() {
 	r.Echo.GET("/recruitment/:user_id/list", recruitmentGetListAction)
 	r.Echo.GET("/recruitment/:recruitment_id", recruitmentGetAction)
 	r.Echo.POST("/recruitment/add", recruitmentAddAction)
-	// r.Echo.POST("/recruitment/request/:recruitment_id")
+	r.Echo.POST("/recruitment/request/:recruitment_id", recruitmentRequestAction)
 	// r.Echo.DELETE("/recruitment/cancel/:recruitment_id/:user_id")
 	// r.Echo.POST("/user/add")
 	// r.Echo.POST("/login")
