@@ -11,19 +11,19 @@ type Conditions struct {
 }
 
 type UserInTeam struct {
-	ID   int
-	Name string
-	Icon string
+	ID   int    `json:"id" form:"id"`
+	Name string `json:"name" form:"name"`
+	Icon string `json:"icon" form:"icon"`
 }
 
 type Recruitment struct {
-	ID         int
-	Icon       string
-	NumOfUsers int
-	Users      []UserInTeam
-	Title      string
-	StartDate  time.Time
-	EndDate    time.Time
+	ID         int          `json:"id" form:"id"`
+	Icon       string       `json:"icon" form:"icon"`
+	NumOfUsers int          `json:"num_of_users" form:"num_of_users"`
+	Users      []UserInTeam `json:"users" form:"users"`
+	Title      string       `json:"title" form:"title"`
+	StartDate  time.Time    `json:"start_date" form:"start_date"`
+	EndDate    time.Time    `json:"end_date" form:"end_date"`
 }
 
 type RecruitmentForAdding struct {
@@ -42,17 +42,17 @@ type RecruitmentForAdding struct {
 }
 
 type RecruitmentDetail struct {
-	Icon       string
-	EventName  string
-	EventURL   string
-	NumOfUsers int
-	Users      []UserInTeam
-	Conditions Conditions
-	Title      string
-	Message    string
-	StartDate  time.Time
-	EndDate    time.Time
-	Purpose    int
+	Icon       string       `json:"icon" form:"icon"`
+	EventName  string       `json:"event_name" form:"event_name"`
+	EventURL   string       `json:"event_url" form:"event_url"`
+	NumOfUsers int          `json:"num_of_users" form:"num_of_users"`
+	Users      []UserInTeam `json:"users" form:"users"`
+	Conditions Conditions   `json:"conditions" form:"conditions"`
+	Title      string       `json:"title" form:"title"`
+	Message    string       `json:"message" form:"message"`
+	StartDate  time.Time    `json:"start_date" form:"start_date"`
+	EndDate    time.Time    `json:"end_date" form:"end_date"`
+	Purpose    int          `json:"purpose" form:"purpose"`
 }
 
 type RecruitmentModel struct {

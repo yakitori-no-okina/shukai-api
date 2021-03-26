@@ -11,7 +11,23 @@ func (interactor *NotificationInteractor) GetList(user_id int) (notifications do
 	if error_for_get != nil {
 		return domain.Notifications{}, error_for_get
 	}
-	return n_models, nil
+
+	var ns domain.Notifications
+	for _, n_model := range n_models {
+		n := domain.Notification{
+			ID:             n_model.ID,
+			UserID:         n_model.UserID,
+			About:          n_model.About,
+			Message:        n_model.Message,
+			HasRead:        n_model.HasRead,
+			ApprovalWaitID: n_model.ApprovalWaitID,
+			RequesterID:    n_model.RequesterID,
+			RecruitmentID:  n_model.RecruitmentID,
+			DateTime:       n_model.DateTime,
+		}
+		ns = append(ns, n)
+	}
+	return ns, nil
 }
 
 func (interactor *NotificationInteractor) Read(notification_id int) (err error) {
