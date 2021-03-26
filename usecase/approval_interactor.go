@@ -52,7 +52,7 @@ func (interactor *ApprovalInteractor) Decide(id int, should_approval bool) (err 
 			return error_for_get_list
 		}
 
-		if r_model.NumOfUsers <= len(ru_models) {
+		if r_model.NumOfUsers <= len(ru_models)-1 {
 			n_model.Message = "リクエストしていた募集の人数が上限に達しました。他の募集に申し込んでください。"
 			//TODO teamテーブルを作り、募集削除で関連の募集待ちデータ消せるようにする
 			if error_for_remove_list := interactor.AW.RemoveWithRecruitmentID(recruitment_id); error_for_remove_list != nil {

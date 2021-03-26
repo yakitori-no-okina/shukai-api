@@ -99,6 +99,12 @@ func (interactor *RecruitmentInteractor) Add(r_model *domain.RecruitmentModel, r
 		return error_for_store_conditions
 	}
 
+	ru_model := &domain.RecruitmentUsersModel{UserID: r_model.OwnerID, RecruitmentID: recruitment_id}
+	_, error_for_store_users := interactor.RU.Store(ru_model)
+	if error_for_store_users != nil {
+		return error_for_store_users
+	}
+
 	return nil
 }
 
@@ -112,7 +118,7 @@ func (interactor *RecruitmentInteractor) Request(recruitment_id int, user_id int
 		return error_for_get_list
 	}
 
-	if r_model.NumOfUsers <= len(ru_models) {
+	if r_model.NumOfUsers <= len(ru_models)-1 {
 		return errors.New("既に募集人数の上限に達しています。よって、この募集にはリクエストできません")
 	}
 
