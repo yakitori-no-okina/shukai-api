@@ -11,6 +11,7 @@ type RecruitmentInteractor struct {
 	RU RecruitmentUsersRepository
 	RC RecruitmentConditionsRepository
 	US UserSkillRepository
+	U  UserRepository
 	AW ApprovalWaitRepository
 	N  NotificationRepository
 }
@@ -185,10 +186,11 @@ func (interactor *RecruitmentInteractor) getUsersInTeam(recruitment_id int) (use
 	}
 	var uts []domain.UserInTeam
 	for _, ru_model := range ru_models {
+		u_model, _ := interactor.U.Get(ru_model.UserID)
 		u := domain.UserInTeam{
 			ID:   ru_model.UserID,
-			Icon: ru_model.UserModel.Icon,
-			Name: ru_model.UserModel.Name,
+			Icon: u_model.Icon,
+			Name: u_model.Name,
 		}
 		uts = append(uts, u)
 	}

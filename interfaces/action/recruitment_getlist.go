@@ -30,6 +30,9 @@ func NewRecruitmentGetListAction(sqlHandler database.SqlHandler) *RecruitmentGet
 			US: &user.SkillRepository{
 				SqlHandler: sqlHandler,
 			},
+			U: &user.Repository{
+				SqlHandler: sqlHandler,
+			},
 			AW: &approvalwait.Repository{
 				SqlHandler: sqlHandler,
 			},
