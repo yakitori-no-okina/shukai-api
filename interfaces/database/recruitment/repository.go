@@ -28,7 +28,7 @@ func (repo *Repository) Get(id int) (recruitment *domain.RecruitmentModel, err e
 func (repo *Repository) GetListWithSkill(skill *domain.UserSkill) (recruitments []domain.RecruitmentModel, err error) {
 	var rc_models []domain.RecruitmentConditionsModel
 	result := repo.Where(
-		"backend <= ? AND frontend <= ? AND management <= ? AND mobile <= ? AND ai <= ?",
+		"backend <= ? OR frontend <= ? OR management <= ? OR mobile <= ? OR ai <= ?",
 		skill.Backend,
 		skill.Frontend,
 		skill.Management,
