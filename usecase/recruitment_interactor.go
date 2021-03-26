@@ -60,6 +60,10 @@ func (interactor *RecruitmentInteractor) GetDetail(recruitment_id int) (recruitm
 	if error_for_get != nil {
 		return domain.RecruitmentDetail{}, error_for_get
 	}
+	r_model, error_for_get_r := interactor.R.Get(recruitment_id)
+	if error_for_get_r != nil {
+		return domain.RecruitmentDetail{}, error_for_get_r
+	}
 
 	users, error_for_get_userlist := interactor.getUsersInTeam(recruitment_id)
 	if error_for_get_userlist != nil {
@@ -67,17 +71,17 @@ func (interactor *RecruitmentInteractor) GetDetail(recruitment_id int) (recruitm
 	}
 
 	rd := domain.RecruitmentDetail{
-		Icon:       rc_model.RecruitmentModel.Icon,
-		EventName:  rc_model.RecruitmentModel.EventName,
-		EventURL:   rc_model.RecruitmentModel.EventURL,
-		NumOfUsers: rc_model.RecruitmentModel.NumOfUsers,
+		Icon:       r_model.Icon,
+		EventName:  r_model.EventName,
+		EventURL:   r_model.EventURL,
+		NumOfUsers: r_model.NumOfUsers,
 		Users:      users,
 		Conditions: rc_model.Conditions,
-		Title:      rc_model.RecruitmentModel.Title,
-		Message:    rc_model.RecruitmentModel.Message,
-		StartDate:  rc_model.RecruitmentModel.StartDate,
-		EndDate:    rc_model.RecruitmentModel.EndDate,
-		Purpose:    rc_model.RecruitmentModel.Purpose,
+		Title:      r_model.Title,
+		Message:    r_model.Message,
+		StartDate:  r_model.StartDate,
+		EndDate:    r_model.EndDate,
+		Purpose:    r_model.Purpose,
 	}
 	return rd, nil
 }
