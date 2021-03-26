@@ -3,14 +3,14 @@ package domain
 import "time"
 
 type Conditions struct {
-	Backend    int
-	Frontend   int
-	Management int
-	Mobile     int
+	Backend    int `json:"backend" form:"backend" query"backend"`
+	Frontend   int `json:"frontend" form:"frontend" query"frontend"`
+	Management int `json:"management" form:"management" query"management"`
+	Mobile     int `json:"mobile" form:"mobile" query"mobile"`
 	AI         int
 }
 
-type Member struct {
+type UserInTeam struct {
 	ID   int
 	Name string
 	Icon string
@@ -18,36 +18,35 @@ type Member struct {
 
 type Recruitment struct {
 	ID         int
-	OwnerID    int
-	OwnerIcon  string
+	Icon       string
 	NumOfUsers int
-	Member     Member
+	Users      []UserInTeam
 	Title      string
-	Message    string
 	StartDate  time.Time
 	EndDate    time.Time
 }
 
 type RecruitmentForAdding struct {
-	OwnerID    int
-	EventName  string
-	EventURL   string
-	NumOfUsers int
-	Conditions Conditions
-	Title      string
-	Message    string
-	StartDate  time.Time
-	EndDate    time.Time
-	Purpose    int
+	OwnerID    int    `json:"owner_id" form:"owner_id"`
+	EventName  string `json:"event_name" form:"event_name"`
+	EventURL   string `json:"event_url" form:"event_url"`
+	NumOfUsers int    `json:"num_of_users" form:"num_of_users"`
+	Conditions string `json:"conditions" form:"conditions"`
+	Title      string `json:"title" form:"title"`
+	Message    string `json:"message" form:"message"`
+	Icon       string `json:"icon" form:"icon"`
+	StartDate  string `json:"start_date" form:"start_date"`
+	EndDate    string `json:"end_date" form:"end_date"`
+	Purpose    int    `json:"purpose" form:"purpose"`
+	Address    string `json:"address" form:"address"`
 }
 
 type RecruitmentDetail struct {
-	OwnerID    int
-	OwnerIcon  string
+	Icon       string
 	EventName  string
 	EventURL   string
 	NumOfUsers int
-	Users      []Member
+	Users      []UserInTeam
 	Conditions Conditions
 	Title      string
 	Message    string
@@ -65,10 +64,11 @@ type RecruitmentModel struct {
 	NumOfUsers int       `gorm: "not null"`
 	Title      string    `gorm: "not null"`
 	Message    string
+	Icon       string    `gorm: "not null"`
 	StartDate  time.Time `gorm: "not null"`
 	EndDate    time.Time `gorm: "not null"`
-	purpose    int       `gorm: "not null"`
-	address    string    `gorm: "not null"`
+	Purpose    int       `gorm: "not null"`
+	Address    string    `gorm: "not null"`
 }
 
 type RecruitmentConditionsModel struct {

@@ -17,10 +17,10 @@ type ApprovalDecideAction struct {
 func NewApprovalDecideAction(sqlHandler database.SqlHandler) *ApprovalDecideAction {
 	return &ApprovalDecideAction{
 		Interactor: usecase.ApprovalInteractor{
-			Aw: &approvalwait.Repository{
+			AW: &approvalwait.Repository{
 				SqlHandler: sqlHandler,
 			},
-			Ru: &recruitment.UsersRepository{
+			RU: &recruitment.UsersRepository{
 				SqlHandler: sqlHandler,
 			},
 			R: &recruitment.Repository{

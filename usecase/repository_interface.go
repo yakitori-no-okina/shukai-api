@@ -3,10 +3,11 @@ package usecase
 import "shukai-api/domain"
 
 type ApprovalWaitRepository interface {
-	Store(a domain.ApprovalWaitModel) (id int, err error)
+	Store(a *domain.ApprovalWaitModel) (id int, err error)
 	Remove(id int) (err error)
 	RemoveWithRecruitmentID(recruitment_id int) (err error)
-	Get(id int) (recruitment_id int, user_id int, err error)
+	GetProperties(id int) (recruitment_id int, user_id int, err error)
+	Get(recruitment_id int, user_id int) (approvalwait *domain.ApprovalWaitModel, err error)
 }
 
 type NotificationRepository interface {
@@ -15,15 +16,16 @@ type NotificationRepository interface {
 }
 
 type RecruitmentConditionsRepository interface {
-	Store(rc domain.RecruitmentConditionsModel) (id int, err error)
-	Get(id int) (condition *domain.RecruitmentConditionsModel, err error)
+	Store(rc *domain.RecruitmentConditionsModel) (id int, err error)
+	GetWithRecruitmentID(recruitment_id int) (condition *domain.RecruitmentConditionsModel, err error)
 	Getlist() (conditionList *[]domain.RecruitmentConditionsModel, err error)
 }
 
 type RecruitmentRepository interface {
-	Store(r domain.RecruitmentModel) (id int, err error)
+	Store(r *domain.RecruitmentModel) (id int, err error)
 	Remove(id int) (err error)
 	Get(id int) (recruitment *domain.RecruitmentModel, err error)
+	GetListWithSkill(skill *domain.UserSkill) (recruitments []domain.RecruitmentModel, err error)
 }
 
 type RecruitmentUsersRepository interface {
