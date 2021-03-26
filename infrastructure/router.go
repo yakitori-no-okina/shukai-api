@@ -34,6 +34,7 @@ func (r *Routing) setRouting() {
 	userAddAction := func(c echo.Context) error { return action.NewUserAddAction(r.SqlHandler).Add(c) }
 	userEditAction := func(c echo.Context) error { return action.NewUserEditAction(r.SqlHandler).Put(c) }
 	userGetAction := func(c echo.Context) error { return action.NewUserGetAction(r.SqlHandler).Get(c) }
+	loginAction := func(c echo.Context) error { return action.NewLoginAction(r.SqlHandler).Login(c) }
 
 	r.Echo.DELETE("/approval/:approvalwait_id/:should_approval", decideAction)
 	r.Echo.GET("/notification/:user_id", notificationGetListAction)
@@ -46,7 +47,7 @@ func (r *Routing) setRouting() {
 	r.Echo.POST("/user/add", userAddAction)
 	r.Echo.PUT("/user/:user_id", userEditAction)
 	r.Echo.GET("/user/:user_id", userGetAction)
-	// r.Echo.POST("/login")
+	r.Echo.POST("/login", loginAction)
 }
 
 func (r *Routing) Run() {

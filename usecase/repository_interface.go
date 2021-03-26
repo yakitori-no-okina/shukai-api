@@ -39,6 +39,7 @@ type UserRepository interface {
 	Store(u *domain.UserModel) (id int, err error)
 	Update(id int, ue *domain.UserForEditting) (err error)
 	Get(id int) (user *domain.UserModel, err error)
+	GetWithMail(mail string) (user *domain.UserModel, err error)
 }
 
 type UserSkillRepository interface {

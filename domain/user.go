@@ -47,8 +47,8 @@ type UserProfile struct {
 
 type UserModel struct {
 	ID       int    `gorm:"primaryKey" json:"id" form:"id" query"id"`
-	Mail     string `gorm: "not null" json:"mail" form:"mail" query"mail"`
-	Password string `gorm: "not null" json:"password" form:"password" query"password"`
+	Mail     string `gorm: "not null;unique" json:"mail" form:"mail" query"mail"`
+	Password string `gorm: "not null;unique" json:"password" form:"password" query"password"`
 	Name     string `gorm: "not null" json:"name" form:"name" query"name"`
 	Icon     string `gorm: "not null" json:"icon" form:"icon" query"icon"`
 	Github   string `json:"github" form:"github" query"github"`
