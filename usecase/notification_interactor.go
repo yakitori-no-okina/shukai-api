@@ -7,7 +7,7 @@ type NotificationInteractor struct {
 }
 
 func (interactor *NotificationInteractor) GetList(user_id int) (notifications domain.Notifications, err error) {
-	n_models, error_for_get := interactor.N.Getlist()
+	n_models, error_for_get := interactor.N.Getlist(user_id)
 	if error_for_get != nil {
 		return domain.Notifications{}, error_for_get
 	}

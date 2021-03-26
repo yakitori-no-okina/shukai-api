@@ -20,8 +20,8 @@ func (repo *Repository) Update(id int, has_read bool) (err error) {
 	return result.Error
 }
 
-func (repo *Repository) Getlist() (notifications []domain.NotificationModel, err error) {
+func (repo *Repository) Getlist(user_id int) (notifications []domain.NotificationModel, err error) {
 	var ns []domain.NotificationModel
-	result := repo.Find(&ns)
+	result := repo.Where("user_id = ?", user_id).Find(&ns)
 	return ns, result.Error
 }
