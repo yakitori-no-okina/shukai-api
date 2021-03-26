@@ -36,7 +36,7 @@ func NewUserAddAction(sqlHandler database.SqlHandler) *UserAddAction {
 func (action *UserAddAction) Add(c Context) error {
 	user := new(domain.UserForAdding)
 	if err := c.Bind(user); err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, err.Error)
 	}
 
 	links, _ := json.Marshal(user.Links)
@@ -53,7 +53,7 @@ func (action *UserAddAction) Add(c Context) error {
 
 	id, error_for_store := action.Interactor.Add(usermodel)
 	if error_for_store != nil {
-		return c.JSON(http.StatusMethodNotAllowed, error_for_store)
+		return c.JSON(http.StatusMethodNotAllowed, error_for_store.Error)
 	}
 
 	return_value := map[string]interface{}{"id": id, "token": "svasdn"}

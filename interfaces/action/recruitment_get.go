@@ -47,7 +47,7 @@ func (action *RecruitmentGetAction) Get(c Context) error {
 	recruitment_id, _ := strconv.Atoi(c.Param("recruitment_id"))
 	recruitment, error_for_get := action.Interactor.GetDetail(recruitment_id)
 	if error_for_get != nil {
-		return c.JSON(http.StatusBadRequest, error_for_get)
+		return c.JSON(http.StatusBadRequest, error_for_get.Error)
 	}
 
 	return c.JSON(http.StatusOK, recruitment)

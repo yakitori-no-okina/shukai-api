@@ -47,20 +47,19 @@ func NewRecruitmentAddAction(sqlHandler database.SqlHandler) *RecruitmentAddActi
 func (action *RecruitmentAddAction) Add(c Context) error {
 	rfa := new(domain.RecruitmentForAdding)
 	if err := c.Bind(rfa); err != nil {
-		return c.JSON(http.StatusBadRequest, rfa)
+		return c.JSON(http.StatusBadRequest, err.Error)
 	}
 
 	layout := "2006-01-02"
 	start_date, error_for_parse_s := time.Parse(layout, rfa.StartDate)
 	if error_for_parse_s != nil {
-		return c.JSON(http.StatusBadRequest, error_for_parse_s)
+		return c.JSON(http.StatusBadRequest, error_for_parse_s.Error)
 	}
 	end_date, error_for_parse_e := time.Parse(layout, rfa.EndDate)
 	if error_for_parse_e != nil {
-		return c.JSON(http.StatusBadRequest, error_for_parse_e)
+		return c.JSON(http.StatusBadRequest, error_for_parse_e.Error)
 	}
-	// var conditions domain.Conditions
-	// json.Unmarshal([]byte(rfa.Conditions), &conditions)
+
 	r_model := &domain.RecruitmentModel{
 		OwnerID:    rfa.OwnerID,
 		EventName:  rfa.EventName,
@@ -81,7 +80,7 @@ func (action *RecruitmentAddAction) Add(c Context) error {
 
 	error_for_store := action.Interactor.Add(r_model, rc_model)
 	if error_for_store != nil {
-		return c.JSON(http.StatusMethodNotAllowed, error_for_store)
+		return c.JSON(http.StatusMethodNotAllowed, error_for_store.Error)
 	}
 
 	return c.JSON(http.StatusCreated, nil)

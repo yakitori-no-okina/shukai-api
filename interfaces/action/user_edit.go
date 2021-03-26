@@ -38,17 +38,17 @@ func (action *UserEditAction) Put(c Context) error {
 	// bodyデータの抽出
 	user_profile := new(domain.UserProfile)
 	if error_for_body := c.Bind(user_profile); error_for_body != nil {
-		return c.JSON(http.StatusBadRequest, error_for_body)
+		return c.JSON(http.StatusBadRequest, error_for_body.Error)
 	}
 	json_str := c.FormValue("skills")
 	if error_for_skills := json.Unmarshal([]byte(json_str), &(user_profile.Skills)); error_for_skills != nil {
-		return c.JSON(http.StatusBadRequest, error_for_skills)
+		return c.JSON(http.StatusBadRequest, error_for_skills.Error)
 	}
 
 	// パラメータの抽出
 	user_id, error_for_param := strconv.Atoi(c.Param("user_id"))
 	if error_for_param != nil {
-		return c.JSON(http.StatusBadRequest, error_for_param)
+		return c.JSON(http.StatusBadRequest, error_for_param.Error)
 	}
 
 	// 更新するuserデータの整形
@@ -77,7 +77,7 @@ func (action *UserEditAction) Put(c Context) error {
 	// 更新
 	error_for_update := action.Interactor.Put(user_id, user_for_editting, userskill)
 	if error_for_update != nil {
-		return c.JSON(http.StatusNotFound, error_for_update)
+		return c.JSON(http.StatusNotFound, error_for_update.Error)
 	}
 
 	return c.JSON(http.StatusNoContent, nil)
