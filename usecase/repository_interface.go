@@ -12,7 +12,8 @@ type ApprovalWaitRepository interface {
 
 type NotificationRepository interface {
 	Store(n *domain.NotificationModel) (err error)
-	Getlist() (notifications *domain.Notifications, err error)
+	Update(id int, has_read bool) (err error)
+	Getlist() (notifications domain.Notifications, err error)
 }
 
 type RecruitmentConditionsRepository interface {

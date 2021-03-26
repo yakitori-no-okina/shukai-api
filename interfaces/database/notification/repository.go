@@ -14,8 +14,14 @@ func (repo *Repository) Store(n *domain.NotificationModel) (err error) {
 	return result.Error
 }
 
-func (repo *Repository) Getlist() (notifications *domain.Notifications, err error) {
+func (repo *Repository) Update(id int, has_read bool) (err error) {
+	n_model := &domain.NotificationModel{ID: id}
+	result := repo.Model(n_model).Update("has_read", has_read)
+	return result.Error
+}
+
+func (repo *Repository) Getlist() (notifications domain.Notifications, err error) {
 	var ns domain.Notifications
 	result := repo.Find(&ns)
-	return &ns, result.Error
+	return ns, result.Error
 }

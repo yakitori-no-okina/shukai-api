@@ -24,26 +24,28 @@ func NewRouting(sqlHandler *SqlHandler, port string) *Routing {
 
 func (r *Routing) setRouting() {
 	decideAction := func(c echo.Context) error { return action.NewApprovalDecideAction(r.SqlHandler).Decide(c) }
-	userAddAction := func(c echo.Context) error { return action.NewUserAddAction(r.SqlHandler).Add(c) }
-	userEditAction := func(c echo.Context) error { return action.NewUserEditAction(r.SqlHandler).Put(c) }
-	userGetAction := func(c echo.Context) error { return action.NewUserGetAction(r.SqlHandler).Get(c) }
+	notificationGetListAction := func(c echo.Context) error { return action.NewNotificationGetListAction(r.SqlHandler).GetList(c) }
+	notificationReadAction := func(c echo.Context) error { return action.NewNotificationReadAction(r.SqlHandler).Read(c) }
 	recruitmentAddAction := func(c echo.Context) error { return action.NewRecruitmentAddAction(r.SqlHandler).Add(c) }
 	recruitmentGetListAction := func(c echo.Context) error { return action.NewRecruitmentGetListAction(r.SqlHandler).GetList(c) }
 	recruitmentGetAction := func(c echo.Context) error { return action.NewRecruitmentGetAction(r.SqlHandler).Get(c) }
 	recruitmentRequestAction := func(c echo.Context) error { return action.NewRecruitmentRequestAction(r.SqlHandler).Request(c) }
 	recruitmentCancelAction := func(c echo.Context) error { return action.NewRecruitmentCancelAction(r.SqlHandler).Cancel(c) }
+	userAddAction := func(c echo.Context) error { return action.NewUserAddAction(r.SqlHandler).Add(c) }
+	userEditAction := func(c echo.Context) error { return action.NewUserEditAction(r.SqlHandler).Put(c) }
+	userGetAction := func(c echo.Context) error { return action.NewUserGetAction(r.SqlHandler).Get(c) }
 
 	r.Echo.DELETE("/approval/:approvalwait_id/:should_approval", decideAction)
-	r.Echo.POST("/user/add", userAddAction)
-	r.Echo.PUT("/user/:user_id", userEditAction)
-	r.Echo.GET("/user/:user_id", userGetAction)
-	// r.Echo.PATCH("/notification/:user_id/:notification_id")
+	r.Echo.GET("/notification/:user_id", notificationGetListAction)
+	r.Echo.PATCH("/notification/read/:notification_id", notificationReadAction)
 	r.Echo.GET("/recruitment/:user_id/list", recruitmentGetListAction)
 	r.Echo.GET("/recruitment/:recruitment_id", recruitmentGetAction)
 	r.Echo.POST("/recruitment/add", recruitmentAddAction)
 	r.Echo.POST("/recruitment/request/:recruitment_id", recruitmentRequestAction)
 	r.Echo.DELETE("/recruitment/cancel/:recruitment_id/:user_id", recruitmentCancelAction)
-	// r.Echo.POST("/user/add")
+	r.Echo.POST("/user/add", userAddAction)
+	r.Echo.PUT("/user/:user_id", userEditAction)
+	r.Echo.GET("/user/:user_id", userGetAction)
 	// r.Echo.POST("/login")
 }
 
